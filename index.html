@@ -377,16 +377,24 @@ function mapShipObject(obj, _keys){
     }];
   }
 
+  const tujuanVal = get('tujuan','gudangtujuan','gudang_tujuan','planttujuan','plant_tujuan','destination','ke');
+  const apiId = get('id');
+  const uniqueId = apiId
+    ? String(apiId)
+    : (name + '_' + tujuanVal).replace(/[^a-z0-9]/gi,'_').replace(/_+/g,'_').toLowerCase();
+
   return {
-    id: name.replace(/\s+/g,'_').toLowerCase(),
+    id: uniqueId,
     name,
     asal:       get('asal','plantasal','plant_asal','dari','origin','asalkapal'),
-    tujuan:     get('tujuan','gudangtujuan','gudang_tujuan','planttujuan','plant_tujuan','destination','ke'),
+    tujuan:     tujuanVal,
     ekspeditur: get('ekspeditur','shipper','pengirim','ekspedisi'),
     eta:        get('eta','etaarrival','deliverydate','delivery_date','tanggaltiba','tgl_tiba','tgleta'),
+    tglGR:      get('tglgr','tgl_gr','tglegr','tanggalgr','tanggal_gr','grdate','gr_date'),
     keterangan: get('keterangan','catatan','note','notes','remark'),
     muatan:     get('jenismuatan','jenis_muatan','muatan','tipmuatan','type'),
     voyage:     parseInt(get('voyage','voyageke','jumlahvoyage'))||1,
+    nopo:       get('nopo','no_po','noposto','no_po_sto'),
     status, sandar, qty, gr,
     sisa: Math.max(0, sisa),
     products,
@@ -466,17 +474,24 @@ function buildCard(s, idx){
 
   const prodList = (s.products && s.products.length > 0)
     ? s.products
-    : [{nama: s.muatan || 'Muatan', do: s.qty, gr: s.gr, muatan: s.muatan || ''}];
+    : [{nama: s.muatan || 'Muatan', do: s.qty, gr: s.gr, muatan: s.muatan || '', tglGR: s.tglGR||''}];
 
   const prods = prodList.map(pr=>{
     const prDo  = parseFloat(pr.do)  || 0;
     const prGr  = parseFloat(pr.gr)  || 0;
     const pp = pct(prGr, prDo);
     const prodSisa = Math.max(0, prDo - prGr);
+    // Deteksi jenis: CRH di nama produk = Curah, tidak ada nama = Inbag
+    const isCurah = (pr.nama||'').toUpperCase().includes('CRH');
+    const isInbag = !pr.nama || pr.nama==='Muatan';
+    const jenisLabel = pr.muatan==='Curah'||isCurah ? '<span style="background:rgba(59,130,246,0.15);color:var(--blue);border-radius:4px;padding:1px 6px;font-size:0.65rem;font-family:var(--font-mono)">CURAH</span>'
+                     : pr.muatan==='Inbag'||isInbag  ? '<span style="background:rgba(0,201,167,0.12);color:var(--teal);border-radius:4px;padding:1px 6px;font-size:0.65rem;font-family:var(--font-mono)">INBAG</span>'
+                     : pr.muatan ? `<span style="background:var(--bg3);color:var(--muted);border-radius:4px;padding:1px 6px;font-size:0.65rem;font-family:var(--font-mono)">${pr.muatan}</span>` : '';
+    const tglGRLine = pr.tglGR ? `<div style="font-size:0.67rem;color:var(--muted);margin-top:2px;font-family:var(--font-mono)">Tgl. GR: ${pr.tglGR}</div>` : '';
     return `<div class="prod-item">
       <div>
-        <div class="prod-name">${pr.nama||'Muatan'}</div>
-        <div class="prod-type">${pr.muatan||''}</div>
+        <div class="prod-name">${pr.nama||'Muatan'} ${jenisLabel}</div>
+        ${tglGRLine}
       </div>
       <div class="prod-right">
         <div class="prod-do">${fmtN(prDo)} ton</div>
@@ -543,6 +558,8 @@ function buildCard(s, idx){
               <div class="info-row"><span class="info-key">Jenis muatan</span><span class="info-val">${s.muatan||'—'}</span></div>
               <div class="info-row"><span class="info-key">Jumlah voyage</span><span class="info-val">${s.voyage||1}×</span></div>
               <div class="info-row"><span class="info-key">ETA / Delivery</span><span class="info-val">${s.eta||'—'}</span></div>
+              <div class="info-row"><span class="info-key">Tgl. Penerimaan (GR)</span><span class="info-val" style="color:var(--teal)">${s.tglGR||'—'}</span></div>
+              <div class="info-row"><span class="info-key">No. PO STO</span><span class="info-val" style="font-family:var(--font-mono);font-size:0.75rem">${s.nopo||'—'}</span></div>
               <div class="info-row"><span class="info-key">Qty PO (ton)</span><span class="info-val">${fmtN(s.qty)}</span></div>
               <div class="info-row"><span class="info-key">Qty GR (ton)</span><span class="info-val">${fmtN(s.gr)}</span></div>
               <div class="info-row"><span class="info-key">Sisa bongkar</span><span class="info-val" style="color:${sisa>0.01?'var(--amber)':'var(--green)'}">${fmtN(sisa)} ton</span></div>
@@ -611,54 +628,56 @@ function exportExcel(){
 
   const wb = XLSX.utils.book_new();
 
-  // Sheet 1: Ringkasan per kapal
-  const hdr = ['Nama Kapal','Asal','Tujuan','Ekspeditur','ETA','Status','Jenis Muatan','Voyage','Qty PO (ton)','Qty GR (ton)','Sisa (ton)','Realisasi (%)','Keterangan'];
+  // ── Sheet 1: Rekap per Kapal ──
+  const hdr = ['Nama Kapal','No. PO STO','Asal','Gudang Tujuan','Ekspeditur','ETA','Tgl. GR','Status','Jenis Muatan','Voyage','Qty PO (ton)','Qty GR (ton)','Sisa (ton)','Realisasi (%)','Keterangan'];
   const rows = [hdr];
   DATA.forEach(s => {
     const st   = s.status==='done'?'Selesai':s.status==='partial'?'Sebagian':'Belum diterima';
     const sisa = Math.max(0,(s.qty||0)-(s.gr||0));
-    rows.push([s.name,s.asal||'',s.tujuan||'',s.ekspeditur||'',s.eta||'',st,s.muatan||'',s.voyage||1,
+    rows.push([
+      s.name, s.nopo||'', s.asal||'', s.tujuan||'', s.ekspeditur||'',
+      s.eta||'', s.tglGR||'', st, s.muatan||'', s.voyage||1,
       parseFloat((s.qty||0).toFixed(3)), parseFloat((s.gr||0).toFixed(3)),
-      parseFloat(sisa.toFixed(3)), pct(s.gr,s.qty)+'%', s.keterangan||'']);
+      parseFloat(sisa.toFixed(3)), pct(s.gr,s.qty)+'%', s.keterangan||''
+    ]);
     (s.products||[]).forEach(pr => {
       const ps = Math.max(0,(pr.do||0)-(pr.gr||0));
-      rows.push(['  └ '+pr.nama,'','','','','',pr.muatan||'','',
+      rows.push([
+        '  └ '+pr.nama, '', '', '', '', '', pr.tglGR||'', '',
+        pr.muatan||'', '',
         parseFloat((pr.do||0).toFixed(3)), parseFloat((pr.gr||0).toFixed(3)),
-        parseFloat(ps.toFixed(3)), pct(pr.gr,pr.do)+'%','']);
+        parseFloat(ps.toFixed(3)), pct(pr.gr,pr.do)+'%', ''
+      ]);
     });
   });
-
   const ws1 = XLSX.utils.aoa_to_sheet(rows);
-
-  // Lebar kolom otomatis
-  ws1['!cols'] = [22,28,28,24,14,14,12,8,14,14,12,13,30].map(w=>({wch:w}));
-
-  // Style header row (bold) — SheetJS CE tidak support cell style, tapi kita set freeze
-  ws1['!freeze'] = { xSplit: 0, ySplit: 1 };
-
+  ws1['!cols'] = [22,14,26,26,22,13,13,13,11,8,13,13,12,12,28].map(w=>({wch:w}));
+  ws1['!freeze'] = { xSplit:0, ySplit:1 };
   XLSX.utils.book_append_sheet(wb, ws1, 'Rekap Kapal');
 
-  // Sheet 2: Detail produk flat
-  const hdr2 = ['Nama Kapal','Tujuan','Produk','Jenis','Qty DO (ton)','Qty GR (ton)','Sisa (ton)','Realisasi (%)'];
+  // ── Sheet 2: Detail Produk flat ──
+  const hdr2 = ['Nama Kapal','No. PO STO','Gudang Tujuan','Produk','Jenis Muatan','Qty DO (ton)','Qty GR (ton)','Sisa (ton)','Realisasi (%)','Tgl. GR'];
   const rows2 = [hdr2];
   DATA.forEach(s => {
     (s.products||[]).forEach(pr => {
       const ps = Math.max(0,(pr.do||0)-(pr.gr||0));
-      rows2.push([s.name, s.tujuan||'', pr.nama||'', pr.muatan||'',
+      rows2.push([
+        s.name, s.nopo||'', s.tujuan||'', pr.nama||'', pr.muatan||'',
         parseFloat((pr.do||0).toFixed(3)), parseFloat((pr.gr||0).toFixed(3)),
-        parseFloat(ps.toFixed(3)), pct(pr.gr,pr.do)+'%']);
+        parseFloat(ps.toFixed(3)), pct(pr.gr,pr.do)+'%', pr.tglGR||''
+      ]);
     });
   });
   const ws2 = XLSX.utils.aoa_to_sheet(rows2);
-  ws2['!cols'] = [22,28,36,10,14,14,12,13].map(w=>({wch:w}));
-  ws2['!freeze'] = { xSplit: 0, ySplit: 1 };
+  ws2['!cols'] = [22,14,26,34,11,13,13,12,12,13].map(w=>({wch:w}));
+  ws2['!freeze'] = { xSplit:0, ySplit:1 };
   XLSX.utils.book_append_sheet(wb, ws2, 'Detail Produk');
 
   const ts = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'}).replace(/\//g,'-');
   XLSX.writeFile(wb, `Rekap_Kapal_Lampung_${ts}.xlsx`);
 }
 
-/* ── EXPORT PDF ── */
+/* ── EXPORT PDF — TEMA TERANG ── */
 function exportPDF(){
   document.getElementById('exportMenu').classList.remove('open');
   if(typeof window.jspdf === 'undefined'){ alert('Library PDF belum siap, coba lagi.'); return; }
@@ -667,94 +686,124 @@ function exportPDF(){
   const doc = new jsPDF({ orientation:'landscape', unit:'mm', format:'a4' });
   const ts  = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'});
 
-  // Header
-  doc.setFillColor(10,13,18);
-  doc.rect(0,0,297,30,'F');
-  doc.setTextColor(0,201,167);
-  doc.setFontSize(14);
+  // Header terang
+  doc.setFillColor(0, 122, 104); // teal gelap
+  doc.rect(0, 0, 297, 26, 'F');
+  doc.setTextColor(255,255,255);
+  doc.setFontSize(13);
   doc.setFont('helvetica','bold');
-  doc.text('Dashboard Penerimaan Kapal — Lampung', 14, 12);
-  doc.setTextColor(107,114,128);
+  doc.text('Dashboard Penerimaan Kapal — Lampung', 14, 11);
   doc.setFontSize(8);
   doc.setFont('helvetica','normal');
-  doc.text(`Dicetak: ${ts}  |  Total: ${DATA.length} kapal  |  Sumber: Google Sheets`, 14, 20);
+  doc.text(`Dicetak: ${ts}   |   Total: ${DATA.length} kapal   |   Sumber: Google Sheets`, 14, 19);
 
-  // Tabel
-  const head = [['Kapal','Asal','Tujuan','Ekspeditur','ETA','Qty PO','GR','Sisa','%','Status']];
+  // Ringkasan statistik
+  const totalQty = DATA.reduce((a,s)=>a+(s.qty||0),0);
+  const totalGR  = DATA.reduce((a,s)=>a+(s.gr||0),0);
+  const totalSisa= Math.max(0, totalQty-totalGR);
+  const pctTotal = totalQty>0?Math.round(totalGR/totalQty*100):0;
+  const cntDone  = DATA.filter(s=>s.status==='done').length;
+  const cntPart  = DATA.filter(s=>s.status==='partial').length;
+  const cntWait  = DATA.filter(s=>s.status==='wait').length;
+
+  doc.setFillColor(248,250,252);
+  doc.rect(0,26,297,18,'F');
+  doc.setDrawColor(220,220,220);
+  doc.line(0,44,297,44);
+  const stats = [
+    [`Total Qty PO`, `${totalQty.toLocaleString('id-ID',{maximumFractionDigits:0})} ton`],
+    [`Total GR`, `${totalGR.toLocaleString('id-ID',{maximumFractionDigits:0})} ton`],
+    [`Sisa Bongkar`, `${totalSisa.toLocaleString('id-ID',{maximumFractionDigits:0})} ton`],
+    [`Realisasi`, `${pctTotal}%`],
+    [`Selesai`, `${cntDone} kapal`],
+    [`Sebagian`, `${cntPart} kapal`],
+    [`Belum`, `${cntWait} kapal`],
+  ];
+  stats.forEach((st,i)=>{
+    const x = 14 + i*40;
+    doc.setFontSize(6.5); doc.setTextColor(100,116,139); doc.setFont('helvetica','normal');
+    doc.text(st[0], x, 33);
+    doc.setFontSize(9); doc.setTextColor(15,23,42); doc.setFont('helvetica','bold');
+    doc.text(st[1], x, 41);
+  });
+
+  // Tabel utama
+  const head = [['Kapal','No. PO STO','Asal','Tujuan','Ekspeditur','ETA','Tgl. GR','Qty PO','GR','Sisa','%','Status']];
   const body = [];
   DATA.forEach(s => {
     const st   = s.status==='done'?'Selesai':s.status==='partial'?'Sebagian':'Belum';
     const sisa = Math.max(0,(s.qty||0)-(s.gr||0));
     const p    = pct(s.gr,s.qty);
     body.push([
-      s.name,
-      (s.asal||'').replace(/^GD /,'').replace(/^PEL /,''),
-      (s.tujuan||'').replace(/^GD /,'').replace(/^PEL /,''),
+      s.name, s.nopo||'—',
+      (s.asal||'').replace(/^(GD |PEL |PKG )/,''),
+      (s.tujuan||'').replace(/^(GD |PEL |PKG )/,''),
       s.ekspeditur||'—',
-      s.eta||'—',
-      (s.qty||0).toLocaleString('id-ID',{maximumFractionDigits:3}),
-      (s.gr||0).toLocaleString('id-ID',{maximumFractionDigits:3}),
-      sisa.toLocaleString('id-ID',{maximumFractionDigits:3}),
-      p+'%',
-      st
+      s.eta||'—', s.tglGR||'—',
+      (s.qty||0).toLocaleString('id-ID',{maximumFractionDigits:0}),
+      (s.gr||0).toLocaleString('id-ID',{maximumFractionDigits:0}),
+      sisa.toLocaleString('id-ID',{maximumFractionDigits:0}),
+      p+'%', st
     ]);
-    // Sub-baris produk
     (s.products||[]).forEach(pr => {
+      const isCurah = (pr.nama||'').toUpperCase().includes('CRH');
       body.push([
-        '   └ '+pr.nama, '','','','',
-        (pr.do||0).toLocaleString('id-ID',{maximumFractionDigits:3}),
-        (pr.gr||0).toLocaleString('id-ID',{maximumFractionDigits:3}),
-        Math.max(0,(pr.do||0)-(pr.gr||0)).toLocaleString('id-ID',{maximumFractionDigits:3}),
+        '   └ '+(pr.nama||'')+(isCurah?' [CRH]':' [Inbag]'),
+        '','','','','', pr.tglGR||'',
+        (pr.do||0).toLocaleString('id-ID',{maximumFractionDigits:0}),
+        (pr.gr||0).toLocaleString('id-ID',{maximumFractionDigits:0}),
+        Math.max(0,(pr.do||0)-(pr.gr||0)).toLocaleString('id-ID',{maximumFractionDigits:0}),
         pct(pr.gr,pr.do)+'%', ''
       ]);
     });
   });
 
   doc.autoTable({
-    startY: 34,
-    head,
-    body,
-    theme: 'grid',
-    styles: { fontSize: 7.5, font: 'helvetica', cellPadding: 2.5, textColor:[232,234,240], fillColor:[17,20,25], lineColor:[40,45,55], lineWidth:0.3 },
-    headStyles: { fillColor:[0,201,167], textColor:[10,13,18], fontStyle:'bold', fontSize:8 },
-    alternateRowStyles: { fillColor:[24,28,35] },
+    startY: 47,
+    head, body,
+    theme: 'striped',
+    styles: {
+      fontSize: 7, font:'helvetica', cellPadding:2.2,
+      textColor:[15,23,42], fillColor:[255,255,255],
+      lineColor:[226,232,240], lineWidth:0.25
+    },
+    headStyles: { fillColor:[0,122,104], textColor:[255,255,255], fontStyle:'bold', fontSize:7.5 },
+    alternateRowStyles: { fillColor:[248,250,252] },
     columnStyles: {
-      0:{cellWidth:38}, 1:{cellWidth:28}, 2:{cellWidth:30}, 3:{cellWidth:30},
-      4:{cellWidth:18}, 5:{cellWidth:18,halign:'right'}, 6:{cellWidth:18,halign:'right'},
-      7:{cellWidth:18,halign:'right'}, 8:{cellWidth:12,halign:'center'}, 9:{cellWidth:18,halign:'center'}
+      0:{cellWidth:34}, 1:{cellWidth:22,font:'courier',fontSize:6.5},
+      2:{cellWidth:24}, 3:{cellWidth:26}, 4:{cellWidth:26},
+      5:{cellWidth:16}, 6:{cellWidth:16},
+      7:{cellWidth:14,halign:'right'}, 8:{cellWidth:14,halign:'right'},
+      9:{cellWidth:14,halign:'right'}, 10:{cellWidth:10,halign:'center'},
+      11:{cellWidth:16,halign:'center'}
     },
     didParseCell(data){
-      // Warnai baris produk sub-item
       if(data.row.raw && String(data.row.raw[0]).startsWith('   └')){
-        data.cell.styles.textColor = [107,114,128];
-        data.cell.styles.fontSize  = 7;
+        data.cell.styles.textColor=[100,116,139]; data.cell.styles.fontSize=6.5;
       }
-      // Warnai kolom status
-      if(data.column.index===9 && data.section==='body'){
-        const v = String(data.cell.raw);
-        if(v==='Selesai')  data.cell.styles.textColor=[34,197,94];
-        if(v==='Sebagian') data.cell.styles.textColor=[245,158,11];
-        if(v==='Belum')    data.cell.styles.textColor=[239,68,68];
+      if(data.column.index===11 && data.section==='body'){
+        const v=String(data.cell.raw);
+        if(v==='Selesai')  { data.cell.styles.textColor=[21,128,61]; data.cell.styles.fontStyle='bold'; }
+        if(v==='Sebagian') { data.cell.styles.textColor=[161,98,7];  data.cell.styles.fontStyle='bold'; }
+        if(v==='Belum')    { data.cell.styles.textColor=[185,28,28]; data.cell.styles.fontStyle='bold'; }
       }
-      // Warnai kolom %
-      if(data.column.index===8 && data.section==='body'){
-        const n = parseInt(data.cell.raw)||0;
-        if(n>=100) data.cell.styles.textColor=[34,197,94];
-        else if(n>=50) data.cell.styles.textColor=[245,158,11];
-        else data.cell.styles.textColor=[239,68,68];
+      if(data.column.index===10 && data.section==='body'){
+        const n=parseInt(data.cell.raw)||0;
+        if(n>=100) data.cell.styles.textColor=[21,128,61];
+        else if(n>=50) data.cell.styles.textColor=[161,98,7];
+        else if(n>0) data.cell.styles.textColor=[185,28,28];
       }
     },
-    margin: { left:14, right:14 },
+    margin:{ left:14, right:14 },
   });
 
-  // Footer halaman
+  // Footer
   const pageCount = doc.internal.getNumberOfPages();
   for(let i=1;i<=pageCount;i++){
     doc.setPage(i);
-    doc.setFontSize(7);
-    doc.setTextColor(107,114,128);
+    doc.setFontSize(7); doc.setTextColor(148,163,184); doc.setFont('helvetica','normal');
     doc.text(`Halaman ${i} / ${pageCount}`, 283, 205, {align:'right'});
-    doc.text('Dashboard Penerimaan Kapal Lampung', 14, 205);
+    doc.text('Dashboard Penerimaan Kapal — Lampung', 14, 205);
   }
 
   const ts2 = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'}).replace(/\//g,'-');
