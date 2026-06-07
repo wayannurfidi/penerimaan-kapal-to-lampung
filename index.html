@@ -18,188 +18,264 @@
 </style>
 <style>
 :root {
-  --bg:#0a0d12;--bg2:#111419;--bg3:#181c23;
-  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
-  --text:#e8eaf0;--muted:#6b7280;--dim:#374151;
-  --teal:#00c9a7;--teal-dim:rgba(0,201,167,0.1);--teal-border:rgba(0,201,167,0.25);
-  --amber:#f59e0b;--amber-dim:rgba(245,158,11,0.1);--amber-border:rgba(245,158,11,0.25);
-  --red:#ef4444;--red-dim:rgba(239,68,68,0.1);--red-border:rgba(239,68,68,0.25);
-  --green:#22c55e;--green-dim:rgba(34,197,94,0.1);--green-border:rgba(34,197,94,0.25);
-  --blue:#3b82f6;--blue-dim:rgba(59,130,246,0.1);
-  --shadow:0 1px 3px rgba(0,0,0,0.4);
+  --bg:#0d1117;--bg2:#161b22;--bg3:#1c2128;--bg4:#21262d;
+  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.15);
+  --text:#e6edf3;--muted:#7d8590;--dim:#30363d;
+  --teal:#39d2c0;--teal-dim:rgba(57,210,192,0.12);--teal-border:rgba(57,210,192,0.3);
+  --cyan:#58d9f9;--cyan-dim:rgba(88,217,249,0.1);
+  --amber:#ffa657;--amber-dim:rgba(255,166,87,0.12);--amber-border:rgba(255,166,87,0.3);
+  --red:#ff7b72;--red-dim:rgba(255,123,114,0.12);--red-border:rgba(255,123,114,0.3);
+  --green:#3fb950;--green-dim:rgba(63,185,80,0.12);--green-border:rgba(63,185,80,0.3);
+  --blue:#58a6ff;--blue-dim:rgba(88,166,255,0.12);--blue-border:rgba(88,166,255,0.3);
+  --purple:#bc8cff;--purple-dim:rgba(188,140,255,0.12);
+  --shadow:0 1px 4px rgba(0,0,0,0.5),0 4px 16px rgba(0,0,0,0.3);
+  --navbar-h:52px;
 }
 [data-theme="light"] {
-  --bg:#f0f2f5;--bg2:#ffffff;--bg3:#f8f9fb;
+  --bg:#f5f6f8;--bg2:#ffffff;--bg3:#f0f2f5;--bg4:#e8eaed;
   --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
-  --text:#111827;--muted:#6b7280;--dim:#9ca3af;
-  --teal:#008a73;--teal-dim:rgba(0,138,115,0.08);--teal-border:rgba(0,138,115,0.25);
-  --amber:#b45309;--amber-dim:rgba(180,83,9,0.08);--amber-border:rgba(180,83,9,0.2);
-  --red:#dc2626;--red-dim:rgba(220,38,38,0.08);--red-border:rgba(220,38,38,0.2);
-  --green:#16a34a;--green-dim:rgba(22,163,74,0.08);--green-border:rgba(22,163,74,0.2);
-  --blue:#2563eb;--blue-dim:rgba(37,99,235,0.08);
-  --shadow:0 1px 3px rgba(0,0,0,0.1);
+  --text:#1a1e27;--muted:#6b7280;--dim:#d1d5db;
+  --teal:#0e9d87;--teal-dim:rgba(14,157,135,0.1);--teal-border:rgba(14,157,135,0.3);
+  --cyan:#0284c7;--cyan-dim:rgba(2,132,199,0.1);
+  --amber:#d97706;--amber-dim:rgba(217,119,6,0.1);--amber-border:rgba(217,119,6,0.3);
+  --red:#dc2626;--red-dim:rgba(220,38,38,0.1);--red-border:rgba(220,38,38,0.3);
+  --green:#16a34a;--green-dim:rgba(22,163,74,0.1);--green-border:rgba(22,163,74,0.3);
+  --blue:#2563eb;--blue-dim:rgba(37,99,235,0.1);--blue-border:rgba(37,99,235,0.3);
+  --purple:#7c3aed;--purple-dim:rgba(124,58,237,0.1);
+  --shadow:0 1px 3px rgba(0,0,0,0.08),0 4px 12px rgba(0,0,0,0.06);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-size:15px;scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;min-height:100vh;transition:background 0.3s,color 0.3s}
-.wrap{max-width:1120px;margin:0 auto;padding:0 24px 60px;position:relative}
+html{font-size:14px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;min-height:100vh;padding-top:var(--navbar-h);transition:background 0.25s,color 0.25s}
 
-/* HEADER */
-.site-header{padding:28px 0 20px;border-bottom:1px solid var(--border);margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.header-brand{display:flex;align-items:center;gap:12px}
-.brand-icon{width:40px;height:40px;background:var(--teal-dim);border:1px solid var(--teal-border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.brand-text h1{font-family:var(--font-display);font-size:1.15rem;font-weight:700;color:var(--text);letter-spacing:-0.02em}
-.brand-text p{font-size:0.72rem;color:var(--muted);margin-top:2px;font-family:var(--font-mono)}
-.header-actions{display:flex;align-items:center;gap:8px}
-.header-meta{font-size:0.72rem;color:var(--muted);font-family:var(--font-mono);text-align:right;line-height:1.6}
-.header-meta strong{color:var(--teal)}
-.icon-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
-.icon-btn:hover{border-color:var(--border2);color:var(--text);background:var(--bg2)}
-.icon-btn.spinning svg{animation:spin 1s linear infinite}
+/* ── NAVBAR ── */
+.navbar{position:fixed;top:0;left:0;right:0;height:var(--navbar-h);background:var(--bg2);border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 20px;z-index:200;gap:12px;transition:background 0.25s,border-color 0.25s}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-logo{width:32px;height:32px;background:linear-gradient(135deg,var(--teal),var(--blue));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.nav-title{font-family:var(--font-display);font-weight:700;font-size:0.95rem;letter-spacing:-0.01em;color:var(--text)}
+.nav-sub{font-size:0.68rem;color:var(--muted);margin-top:1px;font-family:var(--font-mono)}
+.nav-center{display:flex;justify-content:center;align-items:center}
+.nav-update{display:flex;align-items:center;gap:5px;font-size:0.72rem;font-family:var(--font-mono);color:var(--muted);background:var(--bg3);border:1px solid var(--border);border-radius:999px;padding:4px 12px;white-space:nowrap;transition:background 0.25s,border-color 0.25s}
+.nav-update strong{color:var(--teal)}
+.nav-update svg{color:var(--muted);flex-shrink:0}
+.nav-update-sep{opacity:0.4}
+.nav-actions{display:flex;align-items:center;gap:7px;justify-content:flex-end}
+.nav-btn{display:flex;align-items:center;gap:5px;font-size:0.73rem;padding:6px 13px;border-radius:7px;border:none;cursor:pointer;font-family:var(--font-sans);font-weight:600;transition:all 0.15s;white-space:nowrap}
+.nav-btn-refresh{background:#238636;color:#fff}
+.nav-btn-refresh:hover{background:#2ea043}
+.nav-btn-refresh.spinning svg{animation:spin 1s linear infinite}
+.nav-sep{width:1px;height:20px;background:var(--border2);margin:0 2px}
+.theme-btn{width:32px;height:32px;border-radius:7px;border:1px solid var(--border);background:var(--bg3);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;flex-shrink:0}
+.theme-btn:hover{border-color:var(--border2);color:var(--text);background:var(--bg4)}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* STATUS BAR */
-.status-bar{display:flex;align-items:center;gap:8px;margin-bottom:18px;font-size:0.75rem;font-family:var(--font-mono)}
-.status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.dot-ok{background:var(--green)}
-.dot-loading{background:var(--amber);animation:pulse 1s ease infinite}
-.dot-err{background:var(--red)}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+/* ── WRAP ── */
+.wrap{max-width:1440px;margin:0 auto;padding:0 20px 60px}
+
+/* ── STATS STRIP ── */
+.stats-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-bottom:1px solid var(--border);margin-bottom:20px}
+.stat-card{padding:16px 20px;border-right:1px solid var(--border);position:relative}
+.stat-card:last-child{border-right:none}
+.stat-card::after{content:'';position:absolute;bottom:0;left:20px;right:20px;height:2px;border-radius:2px;opacity:0}
+.stat-card:hover::after{opacity:1}
+.stat-card:nth-child(1)::after{background:var(--teal)}
+.stat-card:nth-child(2)::after{background:var(--cyan)}
+.stat-card:nth-child(3)::after{background:var(--amber)}
+.stat-card:nth-child(4)::after{background:var(--blue)}
+.stat-card:nth-child(5)::after{background:var(--purple)}
+.stat-label{font-size:0.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-family:var(--font-mono);margin-bottom:6px}
+.stat-value{font-family:var(--font-display);font-size:2rem;font-weight:800;line-height:1;letter-spacing:-0.03em}
+.stat-sub{font-size:0.63rem;color:var(--muted);margin-top:5px;font-family:var(--font-mono)}
+.sv-teal{color:var(--teal)}.sv-cyan{color:var(--cyan)}.sv-amber{color:var(--amber)}
+.sv-green{color:var(--green)}.sv-red{color:var(--red)}.sv-blue{color:var(--blue)}.sv-purple{color:var(--purple)}
+
+/* ── STATUS BAR ── */
+.status-bar{display:flex;align-items:center;gap:8px;margin-bottom:14px;font-size:0.72rem;font-family:var(--font-mono);padding:0 2px}
+.status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dot-ok{background:var(--green)}.dot-loading{background:var(--amber);animation:pulse 1s ease infinite}.dot-err{background:var(--red)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 .status-text{color:var(--muted)}
 
-/* STATS */
-.stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:22px}
-.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:13px 15px;box-shadow:var(--shadow);transition:border-color 0.2s}
-.stat-card:hover{border-color:var(--border2)}
-.stat-label{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-family:var(--font-mono)}
-.stat-value{font-family:var(--font-display);font-size:1.7rem;font-weight:800;margin:4px 0 2px;line-height:1;letter-spacing:-0.02em}
-.stat-sub{font-size:0.68rem;color:var(--dim)}
-.sv-teal{color:var(--teal)}.sv-green{color:var(--green)}.sv-amber{color:var(--amber)}.sv-red{color:var(--red)}.sv-blue{color:var(--blue)}
-
-/* TOOLBAR */
-.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
-.search-wrap{position:relative;flex:1;min-width:180px}
-.search-wrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
-.search-input{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 11px 8px 34px;font-size:0.82rem;color:var(--text);font-family:var(--font-sans);outline:none;transition:border-color 0.2s;box-shadow:var(--shadow)}
+/* ── TOOLBAR ── */
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.search-wrap{position:relative;flex:1;min-width:200px}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.search-input{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:7px 11px 7px 32px;font-size:0.8rem;color:var(--text);font-family:var(--font-sans);outline:none;transition:border-color 0.2s}
 .search-input::placeholder{color:var(--muted)}
 .search-input:focus{border-color:var(--teal-border)}
-.filter-group{display:flex;gap:5px;flex-wrap:wrap}
-.fbtn{font-size:0.73rem;padding:6px 12px;border-radius:999px;border:1px solid var(--border);background:var(--bg2);color:var(--muted);cursor:pointer;font-family:var(--font-sans);transition:all 0.15s;white-space:nowrap}
+.filter-group{display:flex;gap:4px;flex-wrap:wrap}
+.fbtn{font-size:0.71rem;padding:5px 11px;border-radius:999px;border:1px solid var(--border);background:var(--bg2);color:var(--muted);cursor:pointer;font-family:var(--font-sans);transition:all 0.15s;white-space:nowrap}
 .fbtn:hover{border-color:var(--border2);color:var(--text)}
 .fbtn.on{background:var(--teal-dim);border-color:var(--teal-border);color:var(--teal)}
-.export-btn{display:flex;align-items:center;gap:5px;font-size:0.75rem;padding:7px 13px;border-radius:8px;border:1px solid var(--border);background:var(--bg2);color:var(--muted);cursor:pointer;font-family:var(--font-sans);transition:all 0.15s;white-space:nowrap}
-.export-btn:hover{border-color:var(--teal-border);color:var(--teal);background:var(--teal-dim)}
+
+/* Export dropdown */
 .export-wrap{position:relative}
-.export-menu{display:none;position:absolute;right:0;top:calc(100% + 6px);background:var(--bg2);border:1px solid var(--border2);border-radius:10px;overflow:hidden;z-index:100;min-width:160px;box-shadow:0 8px 24px rgba(0,0,0,0.35)}
+.export-btn{display:flex;align-items:center;gap:5px;font-size:0.72rem;padding:6px 12px;border-radius:7px;border:1px solid var(--border);background:var(--bg2);color:var(--muted);cursor:pointer;font-family:var(--font-sans);transition:all 0.15s;white-space:nowrap}
+.export-btn:hover{border-color:var(--border2);color:var(--text)}
+.export-menu{display:none;position:absolute;right:0;top:calc(100% + 6px);background:var(--bg2);border:1px solid var(--border2);border-radius:10px;overflow:hidden;z-index:100;min-width:160px;box-shadow:0 8px 24px rgba(0,0,0,0.5)}
 .export-menu.open{display:block}
-.export-item{display:flex;align-items:center;gap:8px;width:100%;padding:9px 14px;font-size:0.78rem;font-family:var(--font-sans);background:none;border:none;color:var(--text);cursor:pointer;text-align:left;transition:background 0.15s}
-.export-item:hover{background:var(--teal-dim);color:var(--teal)}
+.export-item{display:flex;align-items:center;gap:8px;width:100%;padding:8px 14px;font-size:0.76rem;font-family:var(--font-sans);background:none;border:none;color:var(--text);cursor:pointer;text-align:left;transition:background 0.15s}
+.export-item:hover{background:var(--bg3)}
+.export-item.xl{color:var(--green)}.export-item.pdf{color:var(--red)}
 
-/* TABLE HEADER */
-.table-header{display:grid;grid-template-columns:2fr 1.3fr 0.9fr 0.9fr 0.9fr 1fr 90px 32px;gap:10px;padding:7px 14px;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;font-family:var(--font-mono);margin-bottom:6px}
+/* ── TABLE HEADER ── */
+.table-header{display:grid;grid-template-columns:2fr 1.3fr 0.9fr 0.9fr 0.9fr 1fr 90px 32px;gap:10px;padding:6px 14px;font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-family:var(--font-mono);margin-bottom:5px;border-bottom:1px solid var(--border)}
 
-/* CARDS */
-.ships{display:flex;flex-direction:column;gap:5px}
-.ship-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);animation:fadeUp 0.4s ease both}
+/* ── CARDS ── */
+.ships{display:flex;flex-direction:column;gap:4px}
+.ship-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color 0.2s;animation:fadeUp 0.35s ease both}
 .ship-card:hover{border-color:var(--border2)}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.ship-row{display:grid;grid-template-columns:2fr 1.3fr 0.9fr 0.9fr 0.9fr 1fr 90px 32px;gap:10px;padding:13px 14px;align-items:center;cursor:pointer}
-.sname{font-family:var(--font-display);font-size:0.88rem;font-weight:700;color:var(--text);letter-spacing:-0.01em}
-.sroute{font-size:0.68rem;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:3px;flex-wrap:wrap}
-.cell-text{font-size:0.78rem;color:var(--text)}
-.cell-sub{font-size:0.68rem;color:var(--muted);margin-top:2px}
-.badge{display:inline-flex;align-items:center;gap:3px;font-size:0.65rem;padding:2px 8px;border-radius:999px;font-family:var(--font-mono);white-space:nowrap;margin:1px 1px 0 0}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.ship-row{display:grid;grid-template-columns:2fr 1.3fr 0.9fr 0.9fr 0.9fr 1fr 90px 32px;gap:10px;padding:12px 14px;align-items:center;cursor:pointer}
+.sname{font-family:var(--font-display);font-size:0.86rem;font-weight:700;color:var(--text);letter-spacing:-0.01em}
+.sroute{font-size:0.66rem;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:3px;flex-wrap:wrap}
+.cell-text{font-size:0.77rem;color:var(--text)}
+.cell-sub{font-size:0.66rem;color:var(--muted);margin-top:2px}
+.badge{display:inline-flex;align-items:center;gap:3px;font-size:0.63rem;padding:2px 8px;border-radius:999px;font-family:var(--font-mono);white-space:nowrap;margin:1px 1px 0 0}
 .badge-done{background:var(--green-dim);color:var(--green);border:1px solid var(--green-border)}
 .badge-partial{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border)}
 .badge-wait{background:var(--red-dim);color:var(--red);border:1px solid var(--red-border)}
 .badge-anchor{background:var(--teal-dim);color:var(--teal);border:1px solid var(--teal-border)}
 .prog-cell{display:flex;flex-direction:column;gap:3px}
-.prog-bar-wrap{height:4px;background:var(--border);border-radius:999px;overflow:hidden}
+.prog-bar-wrap{height:4px;background:var(--dim);border-radius:999px;overflow:hidden}
 .prog-fill{height:100%;border-radius:999px;transition:width 0.6s cubic-bezier(0.4,0,0.2,1)}
-.prog-pct{font-size:0.68rem;color:var(--muted);font-family:var(--font-mono)}
+.prog-pct{font-size:0.66rem;color:var(--muted);font-family:var(--font-mono)}
 .chevron-btn{background:none;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform 0.2s,color 0.2s;padding:4px}
 .chevron-btn.open{transform:rotate(180deg);color:var(--teal)}
 
-/* DETAIL */
+/* ── DETAIL ── */
 .detail-panel{border-top:1px solid var(--border);max-height:0;overflow:hidden;transition:max-height 0.35s cubic-bezier(0.4,0,0.2,1)}
-.detail-panel.open{max-height:800px}
-.detail-inner{padding:15px 14px 18px}
-.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.det-section h4{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);font-family:var(--font-mono);margin-bottom:10px}
+.detail-panel.open{max-height:900px}
+.detail-inner{padding:14px 14px 18px;background:var(--bg3)}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.det-section h4{font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);font-family:var(--font-mono);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
 .prod-item{display:flex;justify-content:space-between;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border)}
 .prod-item:last-child{border-bottom:none;padding-bottom:0}
-.prod-name{font-size:0.78rem;color:var(--text)}
-.prod-type{font-size:0.65rem;color:var(--muted);margin-top:2px;font-family:var(--font-mono)}
-.prod-right{text-align:right;min-width:115px}
-.prod-do{font-size:0.78rem;font-weight:500;color:var(--text);font-family:var(--font-mono)}
-.prod-gr{font-size:0.68rem;color:var(--muted);margin-top:1px}
-.prod-sisa{font-size:0.68rem;margin-top:1px;font-family:var(--font-mono)}
-.prod-pbar{height:3px;background:var(--border);border-radius:999px;overflow:hidden;margin-top:5px}
+.prod-name{font-size:0.77rem;color:var(--text)}
+.prod-right{text-align:right;min-width:120px}
+.prod-do{font-size:0.77rem;font-weight:600;color:var(--text);font-family:var(--font-mono)}
+.prod-gr{font-size:0.66rem;color:var(--muted);margin-top:1px}
+.prod-sisa{font-size:0.66rem;margin-top:1px;font-family:var(--font-mono)}
+.prod-pbar{height:3px;background:var(--dim);border-radius:999px;overflow:hidden;margin-top:5px}
 .prod-pfill{height:100%;border-radius:999px}
-.info-rows{display:flex;flex-direction:column;gap:6px}
-.info-row{display:flex;justify-content:space-between;align-items:flex-start;font-size:0.78rem;gap:8px}
-.info-key{color:var(--muted);flex-shrink:0}
-.info-val{color:var(--text);font-family:var(--font-mono);font-size:0.75rem;text-align:right}
-.keterangan-box{margin-top:11px;padding:8px 11px;background:var(--teal-dim);border:1px solid var(--teal-border);border-radius:8px;font-size:0.75rem;color:var(--teal);display:flex;gap:7px;align-items:flex-start}
-/* SISA bongkar highlight */
+.info-rows{display:flex;flex-direction:column;gap:5px}
+.info-row{display:flex;justify-content:space-between;align-items:flex-start;font-size:0.77rem;gap:8px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.info-row:last-child{border-bottom:none}
+.info-key{color:var(--muted);flex-shrink:0;font-size:0.73rem}
+.info-val{color:var(--text);font-family:var(--font-mono);font-size:0.73rem;text-align:right}
+.keterangan-box{margin-top:10px;padding:8px 11px;background:var(--teal-dim);border:1px solid var(--teal-border);border-radius:8px;font-size:0.73rem;color:var(--teal);display:flex;gap:7px;align-items:flex-start}
 .sisa-highlight{margin-top:10px;padding:9px 12px;background:var(--amber-dim);border:1px solid var(--amber-border);border-radius:8px;display:flex;justify-content:space-between;align-items:center}
-.sisa-label{font-size:0.72rem;color:var(--amber);font-family:var(--font-mono)}
+.sisa-label{font-size:0.7rem;color:var(--amber);font-family:var(--font-mono)}
 .sisa-value{font-size:1rem;font-weight:700;font-family:var(--font-display);color:var(--amber)}
 
-/* SKELETON */
-.skeleton{background:linear-gradient(90deg,var(--bg2) 25%,var(--bg3) 50%,var(--bg2) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:8px;height:52px;margin-bottom:5px}
+/* ── SKELETON ── */
+.skeleton{background:linear-gradient(90deg,var(--bg2) 25%,var(--bg3) 50%,var(--bg2) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:8px;height:50px;margin-bottom:4px}
 @keyframes shimmer{to{background-position:-200% 0}}
-
-.no-result{text-align:center;padding:48px;color:var(--muted);font-size:0.88rem;display:none}
+.no-result{text-align:center;padding:48px;color:var(--muted);font-size:0.86rem;display:none}
 .no-result svg{display:block;margin:0 auto 10px;opacity:0.3}
-.footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--border);text-align:center;font-size:0.7rem;color:var(--dim);font-family:var(--font-mono)}
+.footer{margin-top:32px;padding-top:14px;border-top:1px solid var(--border);text-align:center;font-size:0.68rem;color:var(--muted);font-family:var(--font-mono)}
 
-@media(max-width:800px){
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
+@media(max-width:900px){
+  .stats-strip{grid-template-columns:repeat(2,1fr)}
+  .stat-card{border-right:none;border-bottom:1px solid var(--border)}
   .table-header{display:none}
   .ship-row{grid-template-columns:1fr auto 28px;gap:8px}
   .ship-row>*:not(:first-child):not(:last-child):not(:nth-child(6)){display:none}
   .ship-row>:nth-child(6){display:flex;flex-direction:column;gap:3px}
   .detail-grid{grid-template-columns:1fr}
+  .nav-center{display:none}
+  .navbar{grid-template-columns:1fr auto}
 }
+
+/* ── CHART ── */
+.hbar-row{display:flex;flex-direction:column;gap:4px}
+.hbar-label{display:flex;justify-content:space-between;font-size:0.73rem;font-family:var(--font-mono);color:var(--text)}
+.hbar-label span:last-child{color:var(--muted);font-size:0.68rem}
+.hbar-track{height:20px;background:var(--dim);border-radius:6px;overflow:hidden;position:relative}
+.hbar-fill-po{position:absolute;top:0;left:0;height:100%;border-radius:6px;transition:width 0.7s cubic-bezier(0.4,0,0.2,1);opacity:0.35}
+.hbar-fill-gr{position:absolute;top:0;left:0;height:100%;border-radius:6px;transition:width 0.9s cubic-bezier(0.4,0,0.2,1)}
+.hbar-pct{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:0.65rem;font-family:var(--font-mono);font-weight:700;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.5)}
 </style>
 </head>
 <body>
+
+<!-- NAVBAR FIXED -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo">⚓</div>
+    <div>
+      <div class="nav-title">Penerimaan Kapal Lampung</div>
+      <div class="nav-sub">Sistem Informasi Kedatangan &amp; Bongkar Muatan</div>
+    </div>
+  </div>
+  <div class="nav-center">
+    <div class="nav-update">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      Update: <strong id="lastUpdate">—</strong>
+      <span class="nav-update-sep">·</span>
+      <span id="dataSource" style="color:var(--muted)">Memuat...</span>
+    </div>
+  </div>
+  <div class="nav-actions">
+    <button class="nav-btn nav-btn-refresh" id="refreshBtn" onclick="loadData()">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+      Refresh Data
+    </button>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle tema">
+      <svg id="themeIcon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</nav>
+
 <div class="wrap">
 
-  <header class="site-header">
-    <div class="header-brand">
-      <div class="brand-icon">⚓</div>
-      <div class="brand-text">
-        <h1>Penerimaan Kapal Lampung</h1>
-        <p>Sistem Informasi Kedatangan &amp; Bongkar Muatan</p>
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="stat-card">
+      <div class="stat-label">
+        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right:4px;vertical-align:-1px"><path d="M3 17l4-8 4 4 4-6 4 10"/></svg>
+        Total Kapal
       </div>
+      <div class="stat-value sv-teal" id="s-total">—</div>
+      <div class="stat-sub">🚢 dalam sistem</div>
     </div>
-    <div class="header-actions">
-      <div class="header-meta">
-        <div>Update: <strong id="lastUpdate">—</strong></div>
-        <div id="dataSource">Memuat data...</div>
+    <div class="stat-card">
+      <div class="stat-label">
+        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right:4px;vertical-align:-1px"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+        Sudah Sandar
       </div>
-      <button class="icon-btn" id="refreshBtn" onclick="loadData()" title="Refresh data">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
-      </button>
-      <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle tema">
-        <svg id="themeIcon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
+      <div class="stat-value sv-cyan" id="s-sandar">—</div>
+      <div class="stat-sub">⚓ di Lampung</div>
     </div>
-  </header>
+    <div class="stat-card">
+      <div class="stat-label">
+        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right:4px;vertical-align:-1px"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Selesai Bongkar
+      </div>
+      <div class="stat-value sv-green" id="s-done">—</div>
+      <div class="stat-sub">✅ fully received</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">
+        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right:4px;vertical-align:-1px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Perlu Pantau
+      </div>
+      <div class="stat-value sv-amber" id="s-pending">—</div>
+      <div class="stat-sub">⚠️ belum / sebagian</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">
+        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right:4px;vertical-align:-1px"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Total Muatan
+      </div>
+      <div class="stat-value sv-purple" style="font-size:1.5rem" id="s-ton">—</div>
+      <div class="stat-sub">📦 ton (semua kapal)</div>
+    </div>
+  </div>
 
   <div class="status-bar">
     <div class="status-dot dot-loading" id="statusDot"></div>
     <span class="status-text" id="statusText">Menghubungkan ke sumber data...</span>
-  </div>
-
-  <div class="stats-grid">
-    <div class="stat-card"><div class="stat-label">Total Kapal</div><div class="stat-value sv-teal" id="s-total">—</div><div class="stat-sub">dalam sistem</div></div>
-    <div class="stat-card"><div class="stat-label">Sudah Sandar</div><div class="stat-value sv-blue" id="s-sandar">—</div><div class="stat-sub">di Lampung</div></div>
-    <div class="stat-card"><div class="stat-label">Selesai Bongkar</div><div class="stat-value sv-green" id="s-done">—</div><div class="stat-sub">fully received</div></div>
-    <div class="stat-card"><div class="stat-label">Perlu Pantau</div><div class="stat-value sv-amber" id="s-pending">—</div><div class="stat-sub">belum / sebagian</div></div>
-    <div class="stat-card"><div class="stat-label">Total Muatan</div><div class="stat-value sv-teal" style="font-size:1.3rem" id="s-ton">—</div><div class="stat-sub">ton (semua kapal)</div></div>
   </div>
 
   <div class="toolbar">
@@ -208,10 +284,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-sans);-webkit
       <input class="search-input" id="searchInput" type="text" placeholder="Cari nama kapal, produk, ekspeditur...">
     </div>
     <div class="filter-group">
-      <button class="fbtn on" onclick="setFilter('all',this)">Semua</button>
-      <button class="fbtn" onclick="setFilter('sandar',this)">Sudah Sandar</button>
-      <button class="fbtn" onclick="setFilter('done',this)">Selesai</button>
-      <button class="fbtn" onclick="setFilter('pending',this)">Belum Tuntas</button>
+      <button class="fbtn on" onclick="setFilter('all',this)">🗂 Semua</button>
+      <button class="fbtn" onclick="setFilter('sandar',this)">⚓ Sudah Sandar</button>
+      <button class="fbtn" onclick="setFilter('done',this)">✅ Selesai</button>
+      <button class="fbtn" onclick="setFilter('pending',this)">⚠️ Belum Tuntas</button>
     </div>
     <div class="export-wrap" id="exportWrap">
       <button class="export-btn" onclick="toggleExportMenu(event)">
@@ -220,11 +296,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-sans);-webkit
         <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
       </button>
       <div class="export-menu" id="exportMenu">
-        <button class="export-item" onclick="exportExcel()">
+        <button class="export-item xl" onclick="exportExcel()">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m8 8 8 8M16 8l-8 8"/></svg>
           Excel (.xlsx)
         </button>
-        <button class="export-item" onclick="exportPDF()">
+        <button class="export-item pdf" onclick="exportPDF()">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           PDF
         </button>
@@ -233,13 +309,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-sans);-webkit
   </div>
 
   <div class="table-header">
-    <span>Kapal &amp; Rute</span>
-    <span>Ekspeditur</span>
-    <span>ETA</span>
-    <span>Qty PO (ton)</span>
-    <span>GR (ton)</span>
-    <span>Status</span>
-    <span>Realisasi</span>
+    <span>🚢 Kapal &amp; Rute</span>
+    <span>🏢 Ekspeditur</span>
+    <span>📅 ETA</span>
+    <span>📋 Qty PO (ton)</span>
+    <span>✅ GR (ton)</span>
+    <span>🔖 Status</span>
+    <span>📊 Realisasi</span>
     <span></span>
   </div>
 
@@ -253,7 +329,45 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-sans);-webkit
     Tidak ada kapal yang cocok.
   </div>
 
-  <div class="footer">Dashboard Penerimaan Kapal — Lampung &nbsp;·&nbsp; Data real-time dari Google Sheets</div>
+  <!-- ── CHART SECTION ── -->
+  <div id="chartSection" style="margin-top:28px;display:none">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <div style="width:3px;height:20px;background:linear-gradient(180deg,var(--teal),var(--blue));border-radius:2px"></div>
+      <h2 style="font-family:var(--font-display);font-size:0.95rem;font-weight:700;letter-spacing:-0.01em">📊 Statistik Realisasi Bongkar</h2>
+      <div style="flex:1"></div>
+      <div id="chartTabs" style="display:flex;gap:4px">
+        <button class="fbtn on" id="tabBar" onclick="switchChart('bar')">📊 Per Kapal</button>
+        <button class="fbtn" id="tabDonut" onclick="switchChart('donut')">🍩 Status</button>
+        <button class="fbtn" id="tabTrend" onclick="switchChart('trend')">📈 Muatan</button>
+      </div>
+    </div>
+
+    <!-- Bar chart -->
+    <div id="chartBar" style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px 24px">
+      <div style="font-size:0.72rem;color:var(--muted);font-family:var(--font-mono);margin-bottom:16px">Perbandingan Qty PO vs GR per Kapal (ton) — klik batang untuk detail</div>
+      <div style="overflow-x:auto">
+        <canvas id="barCanvas" style="min-width:600px;height:280px;display:block"></canvas>
+      </div>
+      <div id="barTooltip" style="margin-top:14px;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-size:0.75rem;font-family:var(--font-mono);display:none;min-height:40px"></div>
+    </div>
+
+    <!-- Donut chart -->
+    <div id="chartDonut" style="display:none;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px 24px">
+      <div style="font-size:0.72rem;color:var(--muted);font-family:var(--font-mono);margin-bottom:16px">Distribusi Status Kapal — hover untuk detail</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap">
+        <canvas id="donutCanvas" width="240" height="240" style="display:block"></canvas>
+        <div id="donutLegend" style="display:flex;flex-direction:column;gap:14px"></div>
+      </div>
+    </div>
+
+    <!-- Horizontal bar (muatan) -->
+    <div id="chartTrend" style="display:none;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px 24px">
+      <div style="font-size:0.72rem;color:var(--muted);font-family:var(--font-mono);margin-bottom:16px">Ranking Muatan Terbesar (Qty PO) — top 10 kapal</div>
+      <div id="hbarChart" style="display:flex;flex-direction:column;gap:10px"></div>
+    </div>
+  </div>
+
+  <div class="footer">⚓ Dashboard Penerimaan Kapal — Lampung &nbsp;·&nbsp; 🔄 Data real-time dari Google Sheets</div>
 </div>
 
 <script>
@@ -265,22 +379,23 @@ let openCards = {};
 
 /* ── THEME ── */
 function toggleTheme(){
-  const html = document.documentElement;
-  const isDark = html.getAttribute('data-theme')==='dark';
-  html.setAttribute('data-theme', isDark?'light':'dark');
-  localStorage.setItem('theme', isDark?'light':'dark');
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const next = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  updateThemeIcon(next);
+}
+function updateThemeIcon(theme){
   const icon = document.getElementById('themeIcon');
-  icon.innerHTML = isDark
+  if(!icon) return;
+  icon.innerHTML = theme === 'light'
     ? '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'
     : '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
 }
 (function initTheme(){
   const saved = localStorage.getItem('theme') || 'dark';
   document.documentElement.setAttribute('data-theme', saved);
-  if(saved==='light'){
-    const icon = document.getElementById('themeIcon');
-    icon.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
-  }
+  updateThemeIcon(saved);
 })();
 
 /* ── UTILS ── */
@@ -462,10 +577,10 @@ function updateStats(){
 
 /* ── RENDER ── */
 function statusBadge(s, sandar){
-  const anchor = sandar ? '<span class="badge badge-anchor">⚓ Sandar</span>' : '';
-  if(s==='done')    return anchor+'<span class="badge badge-done">✓ Selesai</span>';
-  if(s==='partial') return anchor+'<span class="badge badge-partial">~ Sebagian</span>';
-  return anchor+'<span class="badge badge-wait">✕ Belum</span>';
+  const anchor = sandar ? '<span class="badge badge-anchor"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align:-1px"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="22"/><path d="M6 12H2a10 10 0 0 0 20 0h-4"/></svg> Sandar</span>' : '';
+  if(s==='done')    return anchor+'<span class="badge badge-done"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align:-1px"><polyline points="20 6 9 17 4 12"/></svg> Selesai</span>';
+  if(s==='partial') return anchor+'<span class="badge badge-partial"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align:-1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Sebagian</span>';
+  return anchor+'<span class="badge badge-wait"><svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align:-1px"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> Belum</span>';
 }
 
 function buildCard(s, idx){
@@ -520,18 +635,26 @@ function buildCard(s, idx){
     style="animation-delay:${0.1+idx*0.05}s">
     <div class="ship-row" onclick="toggleCard('${s.id}')">
       <div>
-        <div class="sname">${s.name}</div>
+        <div class="sname">🚢 ${s.name}</div>
         <div class="sroute">
+          <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
           <span>${s.asal||'—'}</span>
           <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           <span>${s.tujuan||'—'}</span>
         </div>
       </div>
       <div>
-        <div class="cell-text">${s.ekspeditur||'—'}</div>
-        <div class="cell-sub">${s.muatan||''} · ${s.voyage||1}× voyage</div>
+        <div class="cell-text">
+          <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:-1px;margin-right:3px;opacity:0.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>${s.ekspeditur||'—'}
+        </div>
+        <div class="cell-sub">
+          ${s.muatan==='Curah'?'🌾':'📦'} ${s.muatan||''} · 🔁 ${s.voyage||1}× voyage
+        </div>
       </div>
-      <div class="cell-text">${s.eta||'—'}</div>
+      <div class="cell-text">
+        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:-1px;margin-right:3px;opacity:0.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${s.eta||'—'}
+      </div>
       <div class="cell-text">${fmtN(s.qty)}</div>
       <div class="cell-text">${fmtN(s.gr)}</div>
       <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center">${statusBadge(s.status,s.sandar)}</div>
@@ -547,27 +670,27 @@ function buildCard(s, idx){
       <div class="detail-inner">
         <div class="detail-grid">
           <div class="det-section">
-            <h4>Detail produk &amp; realisasi bongkar</h4>
+            <h4><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:-1px;margin-right:5px"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>Detail Produk &amp; Realisasi Bongkar</h4>
             ${prods}
             ${sisaBlock}
           </div>
           <div class="det-section">
-            <h4>Informasi pengiriman</h4>
+            <h4><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:-1px;margin-right:5px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Informasi Pengiriman</h4>
             <div class="info-rows">
-              <div class="info-row"><span class="info-key">Plant asal</span><span class="info-val">${s.asal||'—'}</span></div>
-              <div class="info-row"><span class="info-key">Gudang tujuan</span><span class="info-val">${s.tujuan||'—'}</span></div>
-              <div class="info-row"><span class="info-key">Ekspeditur</span><span class="info-val">${s.ekspeditur||'—'}</span></div>
-              <div class="info-row"><span class="info-key">Jenis muatan</span><span class="info-val">${s.muatan||'—'}</span></div>
-              <div class="info-row"><span class="info-key">Jumlah voyage</span><span class="info-val">${s.voyage||1}×</span></div>
-              <div class="info-row"><span class="info-key">Tgl. PO STO</span><span class="info-val" style="font-family:var(--font-mono);font-size:0.75rem">${s.tglPO||'—'}</span></div>
-              <div class="info-row"><span class="info-key">ETA / Delivery</span><span class="info-val">${s.eta||'—'}</span></div>
-              <div class="info-row"><span class="info-key">Tgl. GI (Plant Asal)</span><span class="info-val" style="color:var(--muted)">${s.tglGI||'—'}</span></div>
-              <div class="info-row"><span class="info-key">Tgl. Penerimaan (GR)</span><span class="info-val" style="color:var(--teal)">${s.tglGR||'—'}</span></div>
-              <div class="info-row"><span class="info-key">No. PO STO</span><span class="info-val" style="font-family:var(--font-mono);font-size:0.75rem">${s.nopo||'—'}</span></div>
-              <div class="info-row"><span class="info-key">Qty PO (ton)</span><span class="info-val">${fmtN(s.qty)}</span></div>
-              <div class="info-row"><span class="info-key">Qty GR (ton)</span><span class="info-val">${fmtN(s.gr)}</span></div>
-              <div class="info-row"><span class="info-key">Sisa bongkar</span><span class="info-val" style="color:${sisa>0.01?'var(--amber)':'var(--green)'}">${fmtN(sisa)} ton</span></div>
-              <div class="info-row"><span class="info-key">Realisasi</span><span class="info-val" style="color:${fc}">${p}%</span></div>
+              <div class="info-row"><span class="info-key">🏭 Plant asal</span><span class="info-val">${s.asal||'—'}</span></div>
+              <div class="info-row"><span class="info-key">🏬 Gudang tujuan</span><span class="info-val">${s.tujuan||'—'}</span></div>
+              <div class="info-row"><span class="info-key">🚛 Ekspeditur</span><span class="info-val">${s.ekspeditur||'—'}</span></div>
+              <div class="info-row"><span class="info-key">${s.muatan==='Curah'?'🌾':'📦'} Jenis muatan</span><span class="info-val">${s.muatan||'—'}</span></div>
+              <div class="info-row"><span class="info-key">🔁 Jumlah voyage</span><span class="info-val">${s.voyage||1}×</span></div>
+              <div class="info-row"><span class="info-key">📋 No. PO STO</span><span class="info-val" style="font-family:var(--font-mono);font-size:0.73rem">${s.nopo||'—'}</span></div>
+              <div class="info-row"><span class="info-key">🗓 Tgl. PO STO</span><span class="info-val" style="font-family:var(--font-mono);font-size:0.73rem">${s.tglPO||'—'}</span></div>
+              <div class="info-row"><span class="info-key">📅 ETA / Delivery</span><span class="info-val">${s.eta||'—'}</span></div>
+              <div class="info-row"><span class="info-key">🚚 Tgl. GI (Plant Asal)</span><span class="info-val" style="color:var(--muted)">${s.tglGI||'—'}</span></div>
+              <div class="info-row"><span class="info-key">✅ Tgl. Penerimaan (GR)</span><span class="info-val" style="color:var(--teal)">${s.tglGR||'—'}</span></div>
+              <div class="info-row"><span class="info-key">📦 Qty PO (ton)</span><span class="info-val">${fmtN(s.qty)}</span></div>
+              <div class="info-row"><span class="info-key">✅ Qty GR (ton)</span><span class="info-val">${fmtN(s.gr)}</span></div>
+              <div class="info-row"><span class="info-key">⚠️ Sisa bongkar</span><span class="info-val" style="color:${sisa>0.01?'var(--amber)':'var(--green)'}">${fmtN(sisa)} ton</span></div>
+              <div class="info-row"><span class="info-key">📊 Realisasi</span><span class="info-val" style="color:${fc}">${p}%</span></div>
             </div>
             ${s.keterangan?`<div class="keterangan-box"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>${s.keterangan}</div>`:''}
           </div>
@@ -813,6 +936,313 @@ function exportPDF(){
   const ts2 = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'}).replace(/\//g,'-');
   doc.save(`Rekap_Kapal_Lampung_${ts2}.pdf`);
 }
+
+/* ══════════════════════════════════════════
+   CHART ENGINE — native Canvas, no library
+   ══════════════════════════════════════════ */
+
+let activeChart = 'bar';
+
+function switchChart(tab){
+  activeChart = tab;
+  document.getElementById('chartBar').style.display   = tab==='bar'   ? '' : 'none';
+  document.getElementById('chartDonut').style.display = tab==='donut' ? '' : 'none';
+  document.getElementById('chartTrend').style.display = tab==='trend' ? '' : 'none';
+  ['tabBar','tabDonut','tabTrend'].forEach(id => document.getElementById(id).classList.remove('on'));
+  const map = {bar:'tabBar',donut:'tabDonut',trend:'tabTrend'};
+  document.getElementById(map[tab]).classList.add('on');
+  if(tab==='bar')   drawBarChart();
+  if(tab==='donut') drawDonutChart();
+  if(tab==='trend') drawHBar();
+}
+
+function renderCharts(){
+  if(!DATA.length){ document.getElementById('chartSection').style.display='none'; return; }
+  document.getElementById('chartSection').style.display='';
+  drawBarChart();
+}
+
+/* — Helper: CSS variable to hex for canvas — */
+function cssVar(v){
+  return getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+}
+
+/* ── BAR CHART (per kapal) ── */
+function drawBarChart(){
+  const canvas = document.getElementById('barCanvas');
+  if(!canvas) return;
+  const ships = DATA.slice(0,12); // max 12 kapal
+  if(!ships.length) return;
+
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.parentElement.scrollWidth || 700;
+  const H = 280;
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const PAD = { top:20, right:20, bottom:64, left:60 };
+  const cW = W - PAD.left - PAD.right;
+  const cH = H - PAD.top  - PAD.bottom;
+  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  const textColor   = isDark ? '#7d8590' : '#6b7280';
+  const gridColor   = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+  const labelColor  = isDark ? '#e6edf3' : '#1a1e27';
+
+  // Scale
+  const maxVal = Math.max(...ships.map(s => Math.max(s.qty||0, s.gr||0)), 1);
+  const niceMax = Math.ceil(maxVal / 1000) * 1000 || 1000;
+
+  // Grid lines
+  ctx.clearRect(0, 0, W, H);
+  const steps = 5;
+  for(let i=0;i<=steps;i++){
+    const y = PAD.top + cH - (i/steps)*cH;
+    const val = Math.round((i/steps)*niceMax);
+    ctx.beginPath(); ctx.strokeStyle = gridColor; ctx.lineWidth = 1;
+    ctx.moveTo(PAD.left, y); ctx.lineTo(PAD.left+cW, y); ctx.stroke();
+    ctx.fillStyle = textColor; ctx.font = `10px var(--font-mono, monospace)`;
+    ctx.textAlign = 'right';
+    ctx.fillText(val>=1000?(val/1000).toFixed(0)+'K':val, PAD.left-6, y+4);
+  }
+
+  // Bars
+  const groupW = cW / ships.length;
+  const barW   = Math.min(groupW * 0.35, 28);
+  const gap    = barW * 0.5;
+  const colors = {
+    po:  isDark ? 'rgba(88,166,255,0.45)' : 'rgba(37,99,235,0.35)',
+    gr:  isDark ? '#39d2c0' : '#0e9d87',
+    done: isDark ? '#3fb950':'#16a34a',
+    partial: isDark ? '#ffa657':'#d97706',
+    wait: isDark ? '#ff7b72':'#dc2626'
+  };
+
+  // Store hit rects for interaction
+  canvas._bars = [];
+  ships.forEach((s,i)=>{
+    const cx = PAD.left + groupW*(i+0.5);
+    const qtyH  = ((s.qty||0)/niceMax) * cH;
+    const grH   = ((s.gr||0)/niceMax)  * cH;
+    const p     = pct(s.gr, s.qty);
+    const grColor = p>=100?colors.done:p>=50?colors.partial:colors.wait;
+
+    // PO bar (background, muted)
+    const x1 = cx - barW - gap/2;
+    ctx.fillStyle = colors.po;
+    ctx.beginPath();
+    const r1 = 4;
+    const y1 = PAD.top + cH - qtyH;
+    ctx.roundRect(x1, y1, barW, qtyH, [r1,r1,0,0]);
+    ctx.fill();
+
+    // GR bar
+    const x2 = cx + gap/2;
+    ctx.fillStyle = grColor;
+    ctx.beginPath();
+    const y2 = PAD.top + cH - grH;
+    ctx.roundRect(x2, y2, barW, grH, [4,4,0,0]);
+    ctx.fill();
+
+    // Percentage label on top of GR bar
+    ctx.fillStyle = grColor;
+    ctx.font = `bold 9px var(--font-mono, monospace)`;
+    ctx.textAlign = 'center';
+    if(grH > 8) ctx.fillText(p+'%', x2+barW/2, y2 - 3);
+
+    // X-axis label
+    const name = s.name.length > 10 ? s.name.substring(0,9)+'…' : s.name;
+    ctx.fillStyle = labelColor; ctx.font = `10px var(--font-sans, sans-serif)`;
+    ctx.textAlign = 'center';
+    ctx.save();
+    ctx.translate(cx, PAD.top+cH+10);
+    ctx.rotate(-0.4);
+    ctx.fillText(name, 0, 0);
+    ctx.restore();
+
+    // Store bar rect for tooltip
+    canvas._bars.push({ x: x1, y: PAD.top, w: barW*2+gap, h: cH, ship: s });
+  });
+
+  // Legend
+  const lgY = H - 12;
+  [[colors.po,'Qty PO'],[isDark?'#39d2c0':'#0e9d87','GR Realisasi']].forEach(([c,l],i)=>{
+    const lx = PAD.left + i*120;
+    ctx.fillStyle = c; ctx.fillRect(lx, lgY-8, 12, 8);
+    ctx.fillStyle = textColor; ctx.font = '10px var(--font-sans, monospace)';
+    ctx.textAlign = 'left'; ctx.fillText(l, lx+16, lgY-1);
+  });
+
+  // Mouse interaction
+  canvas.onmousemove = function(e){
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (W / rect.width);
+    const my = (e.clientY - rect.top)  * (H / rect.height);
+    const tip = document.getElementById('barTooltip');
+    const hit = canvas._bars.find(b => mx>=b.x && mx<=b.x+b.w && my>=b.y && my<=b.y+b.h);
+    if(hit){
+      const s = hit.ship;
+      const p2 = pct(s.gr, s.qty);
+      const sisa = Math.max(0,(s.qty||0)-(s.gr||0));
+      tip.style.display='';
+      tip.innerHTML = `<span style="color:var(--teal);font-weight:700">🚢 ${s.name}</span>
+        &nbsp;·&nbsp; Qty PO: <span style="color:var(--blue)">${fmtN(s.qty)} ton</span>
+        &nbsp;·&nbsp; GR: <span style="color:var(--green)">${fmtN(s.gr)} ton</span>
+        &nbsp;·&nbsp; Sisa: <span style="color:var(--amber)">${fmtN(sisa)} ton</span>
+        &nbsp;·&nbsp; Realisasi: <strong style="color:${p2>=100?'var(--green)':p2>=50?'var(--amber)':'var(--red)'}">${p2}%</strong>`;
+      canvas.style.cursor='pointer';
+    } else {
+      tip.style.display='none';
+      canvas.style.cursor='default';
+    }
+  };
+  canvas.onmouseleave = function(){
+    document.getElementById('barTooltip').style.display='none';
+    canvas.style.cursor='default';
+  };
+}
+
+/* ── DONUT CHART (status) ── */
+function drawDonutChart(){
+  const canvas = document.getElementById('donutCanvas');
+  if(!canvas) return;
+  const done    = DATA.filter(s=>s.status==='done').length;
+  const partial = DATA.filter(s=>s.status==='partial').length;
+  const wait    = DATA.filter(s=>s.status==='wait').length;
+  const total   = DATA.length || 1;
+
+  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  const segments = [
+    { label:'Selesai',   count:done,    color: isDark?'#3fb950':'#16a34a', icon:'✅' },
+    { label:'Sebagian',  count:partial, color: isDark?'#ffa657':'#d97706', icon:'⚠️' },
+    { label:'Belum',     count:wait,    color: isDark?'#ff7b72':'#dc2626', icon:'❌' },
+  ];
+
+  const W=240, H=240, cx=120, cy=120, R=90, r=52;
+  canvas.width=W; canvas.height=H;
+  const ctx = canvas.getContext('2d');
+
+  let angle = -Math.PI/2;
+  let hovered = -1;
+
+  function draw(hov){
+    ctx.clearRect(0,0,W,H);
+    // Shadow ring
+    ctx.beginPath(); ctx.arc(cx,cy,R+2,0,Math.PI*2);
+    ctx.strokeStyle = isDark?'rgba(0,0,0,0.3)':'rgba(0,0,0,0.1)'; ctx.lineWidth=4; ctx.stroke();
+
+    segments.forEach((seg,i)=>{
+      const slice = (seg.count/total)*Math.PI*2;
+      const isHov = hov===i;
+      const rr = isHov ? R+8 : R;
+      ctx.beginPath();
+      ctx.moveTo(cx,cy);
+      ctx.arc(cx,cy,rr,angle,angle+slice);
+      ctx.closePath();
+      ctx.fillStyle = seg.color;
+      ctx.globalAlpha = seg.count===0?0.2:1;
+      ctx.fill();
+      ctx.globalAlpha=1;
+
+      // Label inside if big enough
+      if(seg.count>0 && slice > 0.4){
+        const mid = angle + slice/2;
+        const lx = cx + Math.cos(mid)*(R*0.65);
+        const ly = cy + Math.sin(mid)*(R*0.65);
+        ctx.fillStyle='#fff'; ctx.font='bold 13px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+        ctx.fillText(seg.count, lx, ly);
+      }
+      angle += slice;
+    });
+    angle = -Math.PI/2;
+
+    // Center hole
+    ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+    ctx.fillStyle = isDark?'#161b22':'#ffffff'; ctx.fill();
+
+    // Center text
+    const pctDone = Math.round((done/total)*100);
+    ctx.fillStyle = isDark?'#3fb950':'#16a34a';
+    ctx.font='bold 22px var(--font-display,sans-serif)';
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(pctDone+'%', cx, cy-8);
+    ctx.fillStyle = isDark?'#7d8590':'#6b7280';
+    ctx.font='11px var(--font-mono,monospace)';
+    ctx.fillText('selesai', cx, cy+12);
+  }
+
+  draw(-1);
+
+  // Legend
+  const leg = document.getElementById('donutLegend');
+  leg.innerHTML = segments.map((s,i)=>`
+    <div style="display:flex;align-items:center;gap:10px;cursor:default"
+      onmouseenter="(function(){drawDonutHov(${i})})()"
+      onmouseleave="(function(){drawDonutHov(-1)})()">
+      <div style="width:14px;height:14px;border-radius:4px;background:${s.color};flex-shrink:0"></div>
+      <div>
+        <div style="font-size:0.78rem;font-family:var(--font-display);font-weight:600;color:var(--text)">${s.icon} ${s.label}</div>
+        <div style="font-size:0.68rem;font-family:var(--font-mono);color:var(--muted)">${s.count} kapal · ${Math.round(s.count/total*100)}%</div>
+        <div style="font-size:0.68rem;font-family:var(--font-mono);color:var(--muted)">${fmtN(DATA.filter(d=>
+          s.label==='Selesai'?d.status==='done':s.label==='Sebagian'?d.status==='partial':d.status==='wait'
+        ).reduce((a,d)=>a+(d.qty||0),0))} ton</div>
+      </div>
+    </div>
+  `).join('');
+
+  window._donutCtx = ctx;
+  window._donutSegments = segments;
+  window._donutTotal = total;
+  window._donutDraw = draw;
+}
+
+window.drawDonutHov = function(i){
+  if(window._donutDraw) window._donutDraw(i);
+};
+
+/* ── HORIZONTAL BAR (ranking muatan) ── */
+function drawHBar(){
+  const el = document.getElementById('hbarChart');
+  if(!el || !DATA.length) return;
+  const sorted = [...DATA].sort((a,b)=>(b.qty||0)-(a.qty||0)).slice(0,10);
+  const maxQty = sorted[0].qty || 1;
+  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+
+  el.innerHTML = sorted.map((s,i)=>{
+    const p = pct(s.gr, s.qty);
+    const pctPO = (s.qty/maxQty*100).toFixed(1);
+    const pctGR = (s.gr/maxQty*100).toFixed(1);
+    const grColor = p>=100?(isDark?'#3fb950':'#16a34a'):p>=50?(isDark?'#ffa657':'#d97706'):(isDark?'#ff7b72':'#dc2626');
+    const medals = ['🥇','🥈','🥉'];
+    const medal = medals[i]||`<span style="font-size:0.7rem;font-family:var(--font-mono);color:var(--muted)">#${i+1}</span>`;
+    return `<div class="hbar-row">
+      <div class="hbar-label">
+        <span>${medal} ${s.name}</span>
+        <span>${fmtN(s.gr)} / ${fmtN(s.qty)} ton &nbsp; <strong style="color:${grColor}">${p}%</strong></span>
+      </div>
+      <div class="hbar-track">
+        <div class="hbar-fill-po" style="width:${pctPO}%;background:${isDark?'rgba(88,166,255,0.5)':'rgba(37,99,235,0.35)'}"></div>
+        <div class="hbar-fill-gr" style="width:${pctGR}%;background:${grColor}"></div>
+        <div class="hbar-pct">${p}%</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Animate in
+  setTimeout(()=>{
+    el.querySelectorAll('.hbar-fill-gr,.hbar-fill-po').forEach(el => el.style.transition='width 0.8s cubic-bezier(0.4,0,0.2,1)');
+  },50);
+}
+
+/* Patch updateStats to also render charts */
+const _origUpdateStats = updateStats;
+window.updateStats = function(){
+  _origUpdateStats();
+  renderCharts();
+};
 
 // Auto-load on start
 loadData();
